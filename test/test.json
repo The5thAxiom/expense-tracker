@@ -1,0 +1,652 @@
+[
+    {
+        "date": "2025-01-19T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Zepto",
+        "amount": 696,
+        "category": "Needs",
+        "subCategory": "Groceries",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-19T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Haircut",
+        "amount": 150,
+        "category": "Needs",
+        "subCategory": "Admin",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-20T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To office",
+        "amount": 50,
+        "category": "Needs",
+        "subCategory": "Office Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-20T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "SmartQ",
+        "amount": 174,
+        "category": "Needs",
+        "subCategory": "Office Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-20T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Coconut water",
+        "amount": 60,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Avara Log",
+        "notes": null
+    },
+    {
+        "date": "2025-01-21T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Zepto",
+        "amount": 718.67,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-21T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Swiggy",
+        "amount": 326,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-22T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To office",
+        "amount": 53,
+        "category": "Needs",
+        "subCategory": "Office Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-22T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Biriayni's and More",
+        "amount": 350,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Avara Log",
+        "notes": null
+    },
+    {
+        "date": "2025-01-23T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Poojitha's Birthday gift+cake",
+        "amount": 375,
+        "category": "Wants",
+        "subCategory": "Gifts",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-23T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Coffee",
+        "amount": 40,
+        "category": "Needs",
+        "subCategory": "Office Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-24T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To home",
+        "amount": 28,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-24T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Ed Sheeran Ticket Price",
+        "amount": 3984,
+        "category": "Wants",
+        "subCategory": "Going out",
+        "purpose": "Ed Sheeran Concert",
+        "notes": null
+    },
+    {
+        "date": "2025-01-24T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Shawarma",
+        "amount": 100,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Avara Log",
+        "notes": null
+    },
+    {
+        "date": "2025-01-24T00:00:00Z",
+        "paymentIndex": 3,
+        "description": "Coconut Water",
+        "amount": 30,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Avara Log",
+        "notes": null
+    },
+    {
+        "date": "2025-01-24T00:00:00Z",
+        "paymentIndex": 4,
+        "description": "Grapes",
+        "amount": 120,
+        "category": "Needs",
+        "subCategory": "Groceries",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-25T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Bike to Pista house",
+        "amount": 26,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-25T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Zoo Ticket",
+        "amount": 93.34,
+        "category": "Wants",
+        "subCategory": "Going Out",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-25T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Zoo food",
+        "amount": 222,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-25T00:00:00Z",
+        "paymentIndex": 3,
+        "description": "KFC",
+        "amount": 407,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-26T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Subway",
+        "amount": 855,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-26T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "To Shlok",
+        "amount": 5000,
+        "category": "Wants",
+        "subCategory": "Gifts",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-27T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Zepto",
+        "amount": 361,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-27T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Angel one parked money",
+        "amount": 20000,
+        "category": "Investments",
+        "subCategory": "MF",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-27T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "airtel recharge",
+        "amount": 530,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-28T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Swiggy",
+        "amount": 821,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-28T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Pani",
+        "amount": 240,
+        "category": "Needs",
+        "subCategory": "Groceries",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-29T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To office",
+        "amount": 51,
+        "category": "Needs",
+        "subCategory": "Office Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-29T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Swiggy",
+        "amount": 210,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-30T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To office",
+        "amount": 49,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-30T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "SmartQ",
+        "amount": 90,
+        "category": "Needs",
+        "subCategory": "Office Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-30T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Swiggy",
+        "amount": 462,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-31T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Swiggy",
+        "amount": 684,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-01-31T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Instamart",
+        "amount": 480,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Cook",
+        "amount": 2000,
+        "category": "Needs",
+        "subCategory": "Cook",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Rent + Maintainence",
+        "amount": 20667,
+        "category": "Needs",
+        "subCategory": "Rent",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "To raidurg",
+        "amount": 33,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 3,
+        "description": "Metro to nampally",
+        "amount": 90,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 4,
+        "description": "numaish ticket",
+        "amount": 50,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 5,
+        "description": "plates",
+        "amount": 160,
+        "category": "Wants",
+        "subCategory": "Home",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 6,
+        "description": "fish",
+        "amount": 100,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 7,
+        "description": "pav bhaji",
+        "amount": 180,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 8,
+        "description": "micchi bajji",
+        "amount": 33.33,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 9,
+        "description": "Pen stands",
+        "amount": 160,
+        "category": "Wants",
+        "subCategory": "Home",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 10,
+        "description": "Sweet Corn",
+        "amount": 50,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 11,
+        "description": "Metro to raidurg",
+        "amount": 45,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-01T00:00:00Z",
+        "paymentIndex": 12,
+        "description": "Bike home",
+        "amount": 47,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": "Numaish with Kushal",
+        "notes": null
+    },
+    {
+        "date": "2025-02-02T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Jio recharge 1 day",
+        "amount": 49,
+        "category": "Needs",
+        "subCategory": "Mobile Recharge",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-02T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Ramoji transport",
+        "amount": 992,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": "Ed Sheeran Concert",
+        "notes": null
+    },
+    {
+        "date": "2025-02-02T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Concert drinks and food",
+        "amount": 2526,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": "Ed Sheeran Concert",
+        "notes": null
+    },
+    {
+        "date": "2025-02-02T00:00:00Z",
+        "paymentIndex": 3,
+        "description": "Burger",
+        "amount": 345,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-02T00:00:00Z",
+        "paymentIndex": 4,
+        "description": "Harley's",
+        "amount": 260,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-03T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Mutual Funds",
+        "amount": 17000,
+        "category": "Investments",
+        "subCategory": "MF",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-04T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "Swiggy",
+        "amount": 1298,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-05T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To Office",
+        "amount": 60,
+        "category": "Needs",
+        "subCategory": "Office Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-05T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "SmartQ",
+        "amount": 10,
+        "category": "Needs",
+        "subCategory": "Office Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-05T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Swiggy",
+        "amount": 470,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-06T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To office",
+        "amount": 48,
+        "category": "Needs",
+        "subCategory": "Office Transport",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-06T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "SmartQ",
+        "amount": 87,
+        "category": "Needs",
+        "subCategory": "Office Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-06T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "ud gaye",
+        "amount": 200,
+        "category": "Wants",
+        "subCategory": "Ud Gaye",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-06T00:00:00Z",
+        "paymentIndex": 3,
+        "description": "Dinner",
+        "amount": 586,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-07T00:00:00Z",
+        "paymentIndex": 0,
+        "description": "To office",
+        "amount": 39,
+        "category": "Wants",
+        "subCategory": "Food",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-07T00:00:00Z",
+        "paymentIndex": 1,
+        "description": "Spotify",
+        "amount": 119,
+        "category": "Wants",
+        "subCategory": "Streaming Services",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-07T00:00:00Z",
+        "paymentIndex": 2,
+        "description": "Fruits/Vegetables",
+        "amount": 350,
+        "category": "Needs",
+        "subCategory": "Groceries",
+        "purpose": null,
+        "notes": null
+    },
+    {
+        "date": "2025-02-07T00:00:00Z",
+        "paymentIndex": 3,
+        "description": "To home",
+        "amount": 68,
+        "category": "Wants",
+        "subCategory": "Transport",
+        "purpose": null,
+        "notes": null
+    }
+]
