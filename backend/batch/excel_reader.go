@@ -1,4 +1,4 @@
-package backend
+package batch
 
 import (
 	"log"
@@ -6,37 +6,23 @@ import (
 	"strings"
 	"time"
 
-	t "backend/types"
-
 	excelize "github.com/xuri/excelize/v2"
 )
 
-func ReadRows(filename string, sheetname string) ([][]string, error) {
-	file, err := excelize.OpenFile(filename)
+func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) {
+	rows, err := readRows(filename, sheetname)
 	if err != nil {
 		return nil, err
 	}
 
-	rows, err := file.GetRows(sheetname)
-	if err != nil {
-		return nil, err
-	}
+	rows = rows[1:] // ignore the header
 
-	return rows, nil
-}
-
-func ReadPayments(filename string, sheetname string) ([]t.Payment, error) {
-	rows, err := ReadRows(filename, sheetname)
-	if err != nil {
-		return nil, err
-	}
-
-	payments := make([]t.Payment, len(rows))
+	payments := make([]ExcelPaymentRow, len(rows))
 
 	var runningDate *time.Time = nil
 	paymentIndexForRunningDate := 0
 
-	for index, row := range rows[1:] { // the first row is the header
+	for index, row := range rows {
 		if len(row) < 7 {
 			log.Printf("row #%d has empty values", index)
 			break
@@ -71,19 +57,34 @@ func ReadPayments(filename string, sheetname string) ([]t.Payment, error) {
 			notes = &row[8]
 		}
 
-		payments[index] = t.Payment{
+		payments[index] = ExcelPaymentRow{
 			Date:         timeObject,
 			PaymentIndex: paymentIndexForRunningDate,
 			Description:  row[3],
 			Amount:       amount,
-			Category:     t.Category(row[5]),
-			SubCategory:  t.SubCategory(row[6]),
+			Category:     row[5],
+			Currency:     "INR",
+			SubCategory:  row[6],
 			Purpose:      purpose,
 			Notes:        notes,
 		}
 	}
 
 	return payments, nil
+}
+
+func readRows(filename string, sheetname string) ([][]string, error) {
+	file, err := excelize.OpenFile(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := file.GetRows(sheetname)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
 }
 
 func parseAmount(amountString string) (float64, error) {

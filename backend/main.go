@@ -1,8 +1,8 @@
 package main
 
 import (
-	batch "backend/batch"
-	d "backend/db"
+	"backend/batch"
+	"backend/db"
 	"fmt"
 	"log"
 	"os"
@@ -37,18 +37,20 @@ func main() {
 	dbName := getCliArgument("db")
 	resetDb := getCliFlag("reset-db")
 
-	db, err := d.SQLite(dbName, resetDb)
+	db, err := db.SQLite(dbName, resetDb)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
 	switch command {
-	case "export":
+	case "init":
+		fmt.Println("Initialized db")
+	case "import-excel":
 		excelFileName := getCliArgument("excel")
 		sheetName := getCliArgument("sheet")
 
-		num, err := batch.Import(excelFileName, sheetName, db)
+		num, err := batch.ImportExcelToDb(excelFileName, sheetName, db)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -56,5 +58,17 @@ func main() {
 		fmt.Printf("Added %d payments to %s from %s", num, dbName, excelFileName)
 	case "serve":
 		fmt.Print("serving...")
+	case "help":
+		printHelp()
+	default:
+		printHelp()
 	}
+}
+
+func printHelp() {
+	fmt.Println("Expense Tracker Backend")
+	fmt.Println("Valid commands :\n\tinit: To initialize the database and table\n\timport-excel: To import payments from an excel sheet and write them to the database\n\tserve: To run the server\n\thelp: To display this help message")
+	fmt.Println("Valid flags: \n\t--reset-db: To delete the database and create a new one")
+	fmt.Println("\timport-excel:\n\t\t--excel <path-to-excel-sheet>: The path to the excel sheet to import payments from (REQUIRED)\n\t\t--sheet <sheet-name>: The name of the sheet which has the payment data (REQUIRED)")
+	fmt.Println("\tserve:\n\t\t--port <port-number>: The port on which to run the server (defaults to 8000)")
 }

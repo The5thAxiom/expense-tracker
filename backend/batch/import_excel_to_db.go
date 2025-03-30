@@ -1,21 +1,35 @@
-package backend
+package batch
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
+	"log"
 )
 
-func Import(excelFilename string, sheetName string, db *sql.DB) (int, error) {
+func ImportExcelToDb(excelFilename string, sheetName string, db *sql.DB) (int, error) {
 	payments, err := ReadPayments(excelFilename, sheetName)
-
 	if err != nil {
 		return 0, err
 	}
 
-	jsonBytes, _ := json.Marshal(payments[635:700])
+	log.Printf("Read %d rows from %s[\"%s\"]", len(payments), excelFilename, sheetName)
 
-	fmt.Println(string(jsonBytes))
+	failedWrites := make([]ExcelPaymentRow, 0)
+
+	for i, p := range payments {
+		err = WritePayment(db, p)
+		if err != nil {
+			log.Printf("Could not write payment #%d: %s", i, err.Error())
+			failedWrites = append(failedWrites, p)
+		}
+	}
+
+	if len(failedWrites) > 0 {
+		log.Printf("Could not write %d payments:", len(failedWrites))
+		for i, p := range failedWrites {
+			fmt.Printf("%d: %s", i, p.ToString())
+		}
+	}
 
 	return len(payments), nil
 }

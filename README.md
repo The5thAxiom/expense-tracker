@@ -7,5 +7,5 @@ cd backend
 ```
 
 ```bash
-go run . export --db ../db-1.db --excel ../BudgetAndExpenses.xlsx --sheet Expenses
+go run . import-excel --db ../db-1.db --excel ../BudgetAndExpenses.xlsx --sheet Expenses
 ```
