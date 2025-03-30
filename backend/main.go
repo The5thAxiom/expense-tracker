@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/batch"
-	"backend/db"
+	"backend/database/sqlite"
 	"fmt"
 	"log"
 	"os"
@@ -37,11 +37,11 @@ func main() {
 	dbName := getCliArgument("db")
 	resetDb := getCliFlag("reset-db")
 
-	db, err := db.SQLite(dbName, resetDb)
+	db, err := sqlite.SQLite(dbName, resetDb)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer db.Db().Close()
 
 	switch command {
 	case "init":
@@ -57,7 +57,9 @@ func main() {
 
 		fmt.Printf("Added %d payments to %s from %s", num, dbName, excelFileName)
 	case "serve":
-		fmt.Print("serving...")
+		fmt.Println("serving Y3VudA==...")
+		fmt.Println(db.GetAllCategories())
+		fmt.Println(db.GetCategoryById("needs"))
 	case "help":
 		printHelp()
 	default:

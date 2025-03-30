@@ -1,13 +1,16 @@
 package batch
 
 import (
+	"backend/database"
 	"database/sql"
 	"errors"
 	"log"
 	"strings"
 )
 
-func WritePayment(db *sql.DB, payment ExcelPaymentRow) error {
+func WritePayment(d database.DB, payment ExcelPaymentRow) error {
+	db := d.Db()
+
 	categoryId, err := getExistingOrNewCategoryId(db, payment.Category)
 	if err != nil {
 		return err

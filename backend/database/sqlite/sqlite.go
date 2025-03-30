@@ -1,4 +1,4 @@
-package db
+package sqlite
 
 import (
 	"database/sql"
@@ -9,20 +9,65 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func createDbIfNotExist(dbFileName string) {
-	_, err := os.Stat(dbFileName)
+type SQLiteDB struct {
+	db         *sql.DB
+	dbFileName string
+}
+
+func (d SQLiteDB) Db() *sql.DB {
+	return d.db
+}
+
+func (d SQLiteDB) Close() {
+	d.db.Close()
+}
+
+func SQLite(dbFileName string, resetDb bool) (SQLiteDB, error) {
+	var sqliteDb SQLiteDB
+	sqliteDb.dbFileName = dbFileName
+
+	if resetDb {
+		os.Remove(dbFileName)
+	}
+
+	sqliteDb.createDbIfNotExist()
+
+	db, err := sql.Open("sqlite3", dbFileName)
 	if err != nil {
-		log.Printf("Database file '%s' does not exist.\nCreating...", dbFileName)
-		file, fileCreationErr := os.Create(dbFileName)
+		return sqliteDb, err
+	}
+	sqliteDb.db = db
+
+	err = db.Ping()
+	if err != nil {
+		return sqliteDb, errors.New("Could not ping database " + err.Error())
+	}
+
+	db.Exec("PRAGMA foreign_keys = ON;")
+
+	err = sqliteDb.createTablesIfNotExist()
+	if err != nil {
+		return sqliteDb, errors.New("Could not create tables: " + err.Error())
+	}
+
+	return sqliteDb, nil
+}
+
+func (d SQLiteDB) createDbIfNotExist() {
+	_, err := os.Stat(d.dbFileName)
+	if err != nil {
+		log.Printf("Database file '%s' does not exist.\nCreating...", d.dbFileName)
+		file, fileCreationErr := os.Create(d.dbFileName)
 		if fileCreationErr != nil {
-			log.Fatalf("Could not create database file '%s'", dbFileName)
+			log.Fatalf("Could not create database file '%s'", d.dbFileName)
 		}
 		defer file.Close()
-		log.Printf("Created file '%s'", dbFileName)
+		log.Printf("Created file '%s'", d.dbFileName)
 	}
 }
 
-func createTablesIfNotExist(db *sql.DB) error {
+func (d SQLiteDB) createTablesIfNotExist() error {
+	db := d.db
 	_, err := db.Exec(`
 		CREATE TABLE IF NOT EXISTS Category (
 			id TEXT PRIMARY KEY,
@@ -90,31 +135,4 @@ func createTablesIfNotExist(db *sql.DB) error {
 	}
 
 	return nil
-}
-
-func SQLite(dbFileName string, resetDb bool) (*sql.DB, error) {
-	if resetDb {
-		os.Remove(dbFileName)
-	}
-
-	createDbIfNotExist(dbFileName)
-
-	db, err := sql.Open("sqlite3", dbFileName)
-	if err != nil {
-		return nil, err
-	}
-
-	err = db.Ping()
-	if err != nil {
-		return nil, errors.New("Could not ping database " + err.Error())
-	}
-
-	err = createTablesIfNotExist(db)
-	if err != nil {
-		return nil, errors.New("Could not create tables: " + err.Error())
-	}
-
-	db.Exec("PRAGMA foreign_keys = ON;")
-
-	return db, nil
 }

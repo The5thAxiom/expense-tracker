@@ -1,12 +1,12 @@
 package batch
 
 import (
-	"database/sql"
+	"backend/database"
 	"fmt"
 	"log"
 )
 
-func ImportExcelToDb(excelFilename string, sheetName string, db *sql.DB) (int, error) {
+func ImportExcelToDb(excelFilename string, sheetName string, d database.DB) (int, error) {
 	payments, err := ReadPayments(excelFilename, sheetName)
 	if err != nil {
 		return 0, err
@@ -17,7 +17,7 @@ func ImportExcelToDb(excelFilename string, sheetName string, db *sql.DB) (int, e
 	failedWrites := make([]ExcelPaymentRow, 0)
 
 	for i, p := range payments {
-		err = WritePayment(db, p)
+		err = WritePayment(d, p)
 		if err != nil {
 			log.Printf("Could not write payment #%d: %s", i, err.Error())
 			failedWrites = append(failedWrites, p)
