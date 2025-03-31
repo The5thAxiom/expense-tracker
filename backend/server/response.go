@@ -6,16 +6,16 @@ import (
 	"net/http"
 )
 
-type EndpointResponse struct {
+type Response struct {
 	ErrorMessage *string `json:"errorMessage"`
 	Data         any     `json:"data"`
 }
 
-func NewEndpointResponse(w http.ResponseWriter, statusCode int, data any, errorMessage *string) {
+func NewResponse(w http.ResponseWriter, statusCode int, data any, errorMessage *string) {
 	w.WriteHeader(statusCode)
 	w.Header().Set("Content-Type", "application/json")
 
-	endpointResponse := EndpointResponse{
+	endpointResponse := Response{
 		ErrorMessage: errorMessage,
 		Data:         data,
 	}

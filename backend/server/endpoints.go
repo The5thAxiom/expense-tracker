@@ -35,13 +35,13 @@ func (s Server) categories(w http.ResponseWriter, r *http.Request) {
 		categories, err := s.Db.GetAllCategories()
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, categories, nil)
+		NewResponse(w, http.StatusOK, categories, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -52,19 +52,19 @@ func (s Server) categoryById(w http.ResponseWriter, r *http.Request) {
 		category, err := s.Db.GetCategoryById(categoryId)
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
 		if category == nil {
 			errorMessage := "No category found for id '" + categoryId + "'"
-			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, *category, nil)
+		NewResponse(w, http.StatusOK, *category, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -75,13 +75,13 @@ func (s Server) subCategories(w http.ResponseWriter, r *http.Request) {
 		subCategories, err := s.Db.GetAllSubCategoriesforCategory(categoryId)
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, subCategories, nil)
+		NewResponse(w, http.StatusOK, subCategories, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -94,19 +94,19 @@ func (s Server) subCategoryById(w http.ResponseWriter, r *http.Request) {
 		category, err := s.Db.GetSubCategoryForCategoryById(subCategoryId, categoryId)
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
 		if category == nil {
 			errorMessage := "No sub category found for id '" + categoryId + "'"
-			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, *category, nil)
+		NewResponse(w, http.StatusOK, *category, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -116,13 +116,13 @@ func (s Server) currencies(w http.ResponseWriter, r *http.Request) {
 		currencies, err := s.Db.GetAllCurrencies()
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, currencies, nil)
+		NewResponse(w, http.StatusOK, currencies, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -133,19 +133,19 @@ func (s Server) currencyByAbbreviation(w http.ResponseWriter, r *http.Request) {
 		currency, err := s.Db.GetCurrencyByAbbreviation(currencyAbbreviation)
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
 		if currency == nil {
 			errorMessage := "No currency found for id '" + currencyAbbreviation + "'"
-			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, *currency, nil)
+		NewResponse(w, http.StatusOK, *currency, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -155,13 +155,13 @@ func (s Server) purposes(w http.ResponseWriter, r *http.Request) {
 		purposes, err := s.Db.GetAllPurposes()
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, purposes, nil)
+		NewResponse(w, http.StatusOK, purposes, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -172,19 +172,19 @@ func (s Server) purposesById(w http.ResponseWriter, r *http.Request) {
 		purpose, err := s.Db.GetPurposeById(purposeId)
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
 		if purpose == nil {
 			errorMessage := "No payment purpose found for id '" + purposeId + "'"
-			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, *purpose, nil)
+		NewResponse(w, http.StatusOK, *purpose, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -196,17 +196,17 @@ func (s Server) payments(w http.ResponseWriter, r *http.Request) {
 		payments, err := s.Db.GetAllPayments()
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
 		if len(queryParams) == 0 {
-			NewEndpointResponse(w, http.StatusOK, payments, nil)
+			NewResponse(w, http.StatusOK, payments, nil)
 		} else {
 			filterPaymentsService(w, payments, queryParams)
 		}
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -218,25 +218,25 @@ func (s Server) paymentById(w http.ResponseWriter, r *http.Request) {
 		paymentId := int(paymentIdInt64)
 		if err != nil {
 			errorMessage := fmt.Sprintf("Payment Id '%s' should be an integer", paymentIdPathVar)
-			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 			return
 		}
 
 		payment, err := s.Db.GetPaymentById(paymentId)
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
-			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
 			return
 		}
 
 		if payment == nil {
 			errorMessage := "No payment found for id '" + paymentIdPathVar + "'"
-			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, *payment, nil)
+		NewResponse(w, http.StatusOK, *payment, nil)
 	default:
-		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+		NewResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }

@@ -32,13 +32,13 @@ func filterPaymentsService(w http.ResponseWriter, payments []db.Payment, queryPa
 		if filter == "amountIs" {
 			if len(values) > 1 {
 				errorMessage := "Only one value allowed for 'amountIs'"
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 			amountVal, err := strconv.ParseFloat(values[0], 64)
 			if err != nil {
 				errorMessage := fmt.Sprintf("Value for amountIs (%s) should be a float", values[0])
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
@@ -55,20 +55,20 @@ func filterPaymentsService(w http.ResponseWriter, payments []db.Payment, queryPa
 		if filter == "amountMin" {
 			if slices.Contains(appliedFilters, "amountIs") {
 				errorMessage := "Cannot have both 'amountMin' and 'amountIs' filters together"
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
 			if len(values) > 1 {
 				errorMessage := "Only one value allowed for 'amountMin'"
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
 			amountVal, err := strconv.ParseFloat(values[0], 64)
 			if err != nil {
 				errorMessage := fmt.Sprintf("Value for amountMin (%s) should be a float", values[0])
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
@@ -90,20 +90,20 @@ func filterPaymentsService(w http.ResponseWriter, payments []db.Payment, queryPa
 		if filter == "amountMax" {
 			if slices.Contains(appliedFilters, "amountIs") {
 				errorMessage := "Cannot have both 'amountMax' and 'amountIs' filters together"
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
 			if len(values) > 1 {
 				errorMessage := "Only one value allowed for 'amountMax'"
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
 			amountVal, err := strconv.ParseFloat(values[0], 64)
 			if err != nil {
 				errorMessage := fmt.Sprintf("Value for amountMax (%s) should be a float", values[0])
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
@@ -132,7 +132,7 @@ func filterPaymentsService(w http.ResponseWriter, payments []db.Payment, queryPa
 
 			if len(values) > 1 {
 				errorMessage := "Only one value allowed for 'amountMax'"
-				NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+				NewResponse(w, http.StatusBadRequest, nil, &errorMessage)
 				return
 			}
 
@@ -151,5 +151,5 @@ func filterPaymentsService(w http.ResponseWriter, payments []db.Payment, queryPa
 
 		// description filters
 	}
-	NewEndpointResponse(w, http.StatusOK, filteredPayments, nil)
+	NewResponse(w, http.StatusOK, filteredPayments, nil)
 }
