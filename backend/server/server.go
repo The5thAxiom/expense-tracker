@@ -7,6 +7,17 @@ import (
 	"net/http"
 )
 
+type Server struct {
+	Db   database.DB
+	Mux  *http.ServeMux
+	Port int
+}
+
+type ServerOptions struct {
+	StaticDir *string
+	StaticUrl *string
+}
+
 func New(port int, db database.DB, options *ServerOptions) Server {
 	server := Server{
 		Db:   db,
