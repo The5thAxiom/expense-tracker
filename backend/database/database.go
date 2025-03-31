@@ -9,8 +9,8 @@ type DB interface {
 	// data access methods
 	GetAllCategories() ([]Category, error)
 	GetCategoryById(id string) (*Category, error)
-	// GetAllSubCategories() ([]SubCategory, error)
-	// GetSubCategoryById(id string) (SubCategory, error)
+	GetAllSubCategoriesforCategory(categoryId string) ([]SubCategory, error)
+	GetSubCategoryForCategoryById(id string, categoryId string) (*SubCategory, error)
 	// GetAllCurrencies() ([]Currency, error)
 	// GetCurrencyByAbbreviation(abbreviation string) (*Currency, error)
 	// GetAllPurposes() ([]Purpose, error)

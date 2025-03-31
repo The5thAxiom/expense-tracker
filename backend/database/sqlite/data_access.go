@@ -43,7 +43,7 @@ func (d SQLiteDB) GetCategoryById(categoryId string) (*database.Category, error)
 
 	err := d.db.QueryRow(
 		`SELECT id, name, description FROM CATEGORY WHERE id=?;`, categoryId,
-	).Scan(&category.Id, &category.Name, category.Description)
+	).Scan(&category.Id, &category.Name, &description)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}
@@ -61,9 +61,59 @@ func (d SQLiteDB) GetCategoryById(categoryId string) (*database.Category, error)
 	return &category, nil
 }
 
-// func (d SQLiteDB) GetAllSubCategories() ([]database.SubCategory, error) {}
+func (d SQLiteDB) GetAllSubCategoriesforCategory(categoryId string) ([]database.SubCategory, error) {
+	rows, err := d.db.Query(`SELECT id, name, description FROM SubCategory WHERE SubCategory.categoryId=?;`, categoryId)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-// func (d SQLiteDB) GetSubCategoryById(id string) (*database.SubCategory, error) {}
+	subCategories := make([]database.SubCategory, 0)
+
+	for rows.Next() {
+		var subCategory database.SubCategory
+		var description sql.NullString
+
+		err := rows.Scan(&subCategory.Id, &subCategory.Name, &description)
+		if err != nil {
+			return subCategories, err
+		}
+
+		if description.Valid {
+			subCategory.Description = &description.String
+		} else {
+			subCategory.Description = nil
+		}
+
+		subCategories = append(subCategories, subCategory)
+	}
+
+	return subCategories, nil
+}
+
+func (d SQLiteDB) GetSubCategoryForCategoryById(id string, categoryId string) (*database.SubCategory, error) {
+	var subCategory database.SubCategory
+	var description sql.NullString
+
+	err := d.db.QueryRow(
+		`SELECT id, name, description FROM SubCategory WHERE id=? AND categoryId=?;`, id, categoryId,
+	).Scan(&subCategory.Id, &subCategory.Name, &description)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	if err != nil {
+		return &subCategory, err
+	}
+
+	if description.Valid {
+		subCategory.Description = &description.String
+	} else {
+		subCategory.Description = nil
+	}
+
+	return &subCategory, nil
+}
 
 // func (d SQLiteDB) GetAllCurrencies() ([]database.Currency, error) {}
 

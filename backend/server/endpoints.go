@@ -12,8 +12,8 @@ func (s Server) AddEndpoints() {
 	s.Mux.HandleFunc("/categories", s.categories)
 	s.Mux.HandleFunc("/categories/{categoryId}", s.categoryById)
 
-	s.Mux.HandleFunc("/sub-categories", s.subCategories)
-	s.Mux.HandleFunc("/sub-categories/{subCategoryId}", s.subCategoryById)
+	s.Mux.HandleFunc("/categories/{categoryId}/sub-categories", s.subCategories)
+	s.Mux.HandleFunc("/categories/{categoryId}/sub-categories/{subCategoryId}", s.subCategoryById)
 
 	s.Mux.HandleFunc("/purposes", s.purposes)
 	s.Mux.HandleFunc("/purposes/{purposeId}", s.purposesById)
@@ -68,9 +68,47 @@ func (s Server) categoryById(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s Server) subCategories(w http.ResponseWriter, r *http.Request) {}
+func (s Server) subCategories(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		categoryId := r.PathValue("categoryId")
+		subCategories, err := s.Db.GetAllSubCategoriesforCategory(categoryId)
+		if err != nil {
+			errorMessage := "An error occurred: " + err.Error()
+			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			return
+		}
 
-func (s Server) subCategoryById(w http.ResponseWriter, r *http.Request) {}
+		NewEndpointResponse(w, http.StatusOK, subCategories, nil)
+	default:
+		w.WriteHeader(http.StatusBadRequest)
+	}
+}
+
+func (s Server) subCategoryById(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		categoryId := r.PathValue("categoryId")
+		subCategoryId := r.PathValue("subCategoryId")
+
+		category, err := s.Db.GetSubCategoryForCategoryById(subCategoryId, categoryId)
+		if err != nil {
+			errorMessage := "An error occurred: " + err.Error()
+			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			return
+		}
+
+		if category == nil {
+			errorMessage := "No sub category found for id '" + categoryId + "'"
+			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			return
+		}
+
+		NewEndpointResponse(w, http.StatusOK, *category, nil)
+	default:
+		w.WriteHeader(http.StatusBadRequest)
+	}
+}
 
 func (s Server) currencies(w http.ResponseWriter, r *http.Request) {}
 

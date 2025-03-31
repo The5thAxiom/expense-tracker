@@ -59,7 +59,7 @@ func main() {
 
 		fmt.Printf("Added %d payments to %s from %s", num, dbName, excelFileName)
 	case "serve":
-		server := server.New(8000, db, nil)
+		server := server.New("0.0.0.0", 8000, db, nil)
 		server.Run()
 	case "help":
 		printHelp()

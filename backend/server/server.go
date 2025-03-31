@@ -10,6 +10,7 @@ import (
 type Server struct {
 	Db   database.DB
 	Mux  *http.ServeMux
+	Host string
 	Port int
 }
 
@@ -18,10 +19,11 @@ type ServerOptions struct {
 	StaticUrl *string
 }
 
-func New(port int, db database.DB, options *ServerOptions) Server {
+func New(host string, port int, db database.DB, options *ServerOptions) Server {
 	server := Server{
 		Db:   db,
 		Mux:  http.NewServeMux(),
+		Host: host,
 		Port: port,
 	}
 
@@ -32,11 +34,14 @@ func New(port int, db database.DB, options *ServerOptions) Server {
 	return server
 }
 
-func (s Server) Run() {
-	hostAddress := fmt.Sprintf(":%d", s.Port)
-	fmt.Printf("serving Y3VudA== on port %d...\n", s.Port)
+func (s Server) Address() string {
+	return fmt.Sprintf("%s:%d", s.Host, s.Port)
+}
 
-	err := http.ListenAndServe(hostAddress, s.Mux)
+func (s Server) Run() {
+	fmt.Printf("serving Y3VudA== on host %s port %d...\n", s.Host, s.Port)
+
+	err := http.ListenAndServe(s.Address(), s.Mux)
 	if err != nil {
 		log.Fatal(err)
 	}

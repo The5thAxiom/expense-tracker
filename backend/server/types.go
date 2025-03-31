@@ -12,6 +12,7 @@ type EndpointResponse struct {
 
 func NewEndpointResponse(w http.ResponseWriter, statusCode int, data any, errorMessage *string) {
 	w.WriteHeader(statusCode)
+	w.Header().Set("Content-Type", "application/json")
 
 	endpointResponse := EndpointResponse{
 		ErrorMessage: errorMessage,
