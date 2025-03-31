@@ -48,12 +48,12 @@ func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) 
 		}
 
 		var purpose *string = nil
-		if len(row) > 7 {
+		if len(row) > 7 && len(row[7]) > 0 {
 			purpose = &row[7]
 		}
 
 		var notes *string = nil
-		if len(row) > 8 {
+		if len(row) > 8 && len(row[8]) > 0 {
 			notes = &row[8]
 		}
 

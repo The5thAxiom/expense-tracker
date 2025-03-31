@@ -11,10 +11,9 @@ type Category struct {
 }
 
 type SubCategory struct {
-	Id          string   `json:"id"`
-	Name        string   `json:"name"`
-	Description *string  `json:"description"`
-	Category    Category `json:"category"`
+	Id          string  `json:"id"`
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
 }
 
 type Purpose struct {

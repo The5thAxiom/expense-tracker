@@ -27,7 +27,11 @@ func SQLite(dbFileName string, resetDb bool) (SQLiteDB, error) {
 	sqliteDb.dbFileName = dbFileName
 
 	if resetDb {
-		os.Remove(dbFileName)
+		log.Println("Deleting database file")
+		err := os.Remove(dbFileName)
+		if err != nil {
+			return sqliteDb, err
+		}
 	}
 
 	sqliteDb.createDbIfNotExist()

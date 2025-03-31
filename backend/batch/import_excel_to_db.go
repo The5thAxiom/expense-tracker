@@ -17,7 +17,7 @@ func ImportExcelToDb(excelFilename string, sheetName string, d database.DB) (int
 	failedWrites := make([]ExcelPaymentRow, 0)
 
 	for i, p := range payments {
-		err = WritePayment(d, p)
+		err = WritePayment(d, p, i)
 		if err != nil {
 			log.Printf("Could not write payment #%d: %s", i, err.Error())
 			failedWrites = append(failedWrites, p)
