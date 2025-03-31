@@ -9,20 +9,20 @@ import (
 func (s Server) AddEndpoints() {
 	s.Mux.HandleFunc("/", s.index)
 
-	s.Mux.HandleFunc("/categories", s.categories)
-	s.Mux.HandleFunc("/categories/{categoryId}", s.categoryById)
+	s.Mux.HandleFunc("/categories", s.UseMiddleware(s.categories))
+	s.Mux.HandleFunc("/categories/{categoryId}", s.UseMiddleware(s.categoryById))
 
-	s.Mux.HandleFunc("/categories/{categoryId}/sub-categories", s.subCategories)
-	s.Mux.HandleFunc("/categories/{categoryId}/sub-categories/{subCategoryId}", s.subCategoryById)
+	s.Mux.HandleFunc("/categories/{categoryId}/sub-categories", s.UseMiddleware(s.subCategories))
+	s.Mux.HandleFunc("/categories/{categoryId}/sub-categories/{subCategoryId}", s.UseMiddleware(s.subCategoryById))
 
-	s.Mux.HandleFunc("/purposes", s.purposes)
-	s.Mux.HandleFunc("/purposes/{purposeId}", s.purposesById)
+	s.Mux.HandleFunc("/purposes", s.UseMiddleware(s.purposes))
+	s.Mux.HandleFunc("/purposes/{purposeId}", s.UseMiddleware(s.purposesById))
 
-	s.Mux.HandleFunc("/currencies", s.currencies)
-	s.Mux.HandleFunc("/currencies/{currencyAbbreviation}", s.currencyByAbbreviation)
+	s.Mux.HandleFunc("/currencies", s.UseMiddleware(s.currencies))
+	s.Mux.HandleFunc("/currencies/{currencyAbbreviation}", s.UseMiddleware(s.currencyByAbbreviation))
 
-	s.Mux.HandleFunc("/payments", s.payments)
-	s.Mux.HandleFunc("/payments/{paymentId}", s.paymentById)
+	s.Mux.HandleFunc("/payments", s.UseMiddleware(s.payments))
+	s.Mux.HandleFunc("/payments/{paymentId}", s.UseMiddleware(s.paymentById))
 }
 
 func (s Server) index(res http.ResponseWriter, req *http.Request) {
@@ -41,7 +41,7 @@ func (s Server) categories(w http.ResponseWriter, r *http.Request) {
 
 		NewEndpointResponse(w, http.StatusOK, categories, nil)
 	default:
-		w.WriteHeader(http.StatusBadRequest)
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -64,7 +64,7 @@ func (s Server) categoryById(w http.ResponseWriter, r *http.Request) {
 
 		NewEndpointResponse(w, http.StatusOK, *category, nil)
 	default:
-		w.WriteHeader(http.StatusBadRequest)
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -81,7 +81,7 @@ func (s Server) subCategories(w http.ResponseWriter, r *http.Request) {
 
 		NewEndpointResponse(w, http.StatusOK, subCategories, nil)
 	default:
-		w.WriteHeader(http.StatusBadRequest)
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -106,7 +106,7 @@ func (s Server) subCategoryById(w http.ResponseWriter, r *http.Request) {
 
 		NewEndpointResponse(w, http.StatusOK, *category, nil)
 	default:
-		w.WriteHeader(http.StatusBadRequest)
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -130,7 +130,7 @@ func (s Server) payments(w http.ResponseWriter, r *http.Request) {
 
 		NewEndpointResponse(w, http.StatusOK, payments, nil)
 	default:
-		w.WriteHeader(http.StatusBadRequest)
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
 
@@ -161,6 +161,6 @@ func (s Server) paymentById(w http.ResponseWriter, r *http.Request) {
 
 		NewEndpointResponse(w, http.StatusOK, *payment, nil)
 	default:
-		w.WriteHeader(http.StatusBadRequest)
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
 }
