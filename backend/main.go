@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/batch"
-	"backend/database/sqlite"
+	"backend/db/sqlite"
 	"backend/server"
 	"fmt"
 	"log"
@@ -43,7 +43,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Db().Close()
+	defer db.DbConn().Close()
 
 	switch command {
 	case "init":

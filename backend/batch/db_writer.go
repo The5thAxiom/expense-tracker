@@ -1,15 +1,15 @@
 package batch
 
 import (
-	"backend/database"
+	"backend/db"
 	"database/sql"
 	"errors"
 	"log"
 	"strings"
 )
 
-func WritePayment(d database.DB, payment ExcelPaymentRow, index int) error {
-	db := d.Db()
+func WritePayment(d db.DB, payment ExcelPaymentRow, index int) error {
+	db := d.DbConn()
 	log.Printf("Writing payment #%d (%s #%d)\n", index, payment.Date.String(), payment.PaymentIndex)
 
 	categoryId, err := getExistingOrNewCategoryId(db, payment.Category)

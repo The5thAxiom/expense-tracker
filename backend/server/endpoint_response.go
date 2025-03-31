@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -25,14 +24,5 @@ func NewEndpointResponse(w http.ResponseWriter, statusCode int, data any, errorM
 	w.Write(jsonBytes)
 
 	// can the below be done in a middleware method??
-	dataLogMessage := ""
-	if data != nil {
-		dataLogMessage = fmt.Sprintf("data: %s ", string(jsonBytes))
-	}
-
-	errorLogMessage := ""
-	if errorMessage != nil {
-		errorLogMessage = fmt.Sprintf("error: %s", *errorMessage)
-	}
-	log.Printf("%d %s: %s %s", statusCode, http.StatusText(statusCode), dataLogMessage, errorLogMessage)
+	log.Printf("%d %s: %s", statusCode, http.StatusText(statusCode), string(jsonBytes))
 }

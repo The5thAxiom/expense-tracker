@@ -10,16 +10,12 @@ import (
 )
 
 type SQLiteDB struct {
-	db         *sql.DB
+	dbConn     *sql.DB
 	dbFileName string
 }
 
-func (d SQLiteDB) Db() *sql.DB {
-	return d.db
-}
-
-func (d SQLiteDB) Close() {
-	d.db.Close()
+func (d SQLiteDB) DbConn() *sql.DB {
+	return d.dbConn
 }
 
 func SQLite(dbFileName string, resetDb bool) (SQLiteDB, error) {
@@ -40,7 +36,7 @@ func SQLite(dbFileName string, resetDb bool) (SQLiteDB, error) {
 	if err != nil {
 		return sqliteDb, err
 	}
-	sqliteDb.db = db
+	sqliteDb.dbConn = db
 
 	err = db.Ping()
 	if err != nil {
@@ -71,7 +67,7 @@ func (d SQLiteDB) createDbIfNotExist() {
 }
 
 func (d SQLiteDB) createTablesIfNotExist() error {
-	db := d.db
+	db := d.dbConn
 	_, err := db.Exec(`
 		CREATE TABLE IF NOT EXISTS Category (
 			id TEXT PRIMARY KEY,

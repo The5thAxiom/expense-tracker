@@ -1,14 +1,14 @@
 package server
 
 import (
-	"backend/database"
+	"backend/db"
 	"fmt"
 	"log"
 	"net/http"
 )
 
 type Server struct {
-	Db   database.DB
+	Db   db.DB
 	Mux  *http.ServeMux
 	Host string
 	Port int
@@ -19,7 +19,7 @@ type ServerOptions struct {
 	StaticUrl *string
 }
 
-func New(host string, port int, db database.DB, options *ServerOptions) Server {
+func New(host string, port int, db db.DB, options *ServerOptions) Server {
 	server := Server{
 		Db:   db,
 		Mux:  http.NewServeMux(),

@@ -1,12 +1,12 @@
 package batch
 
 import (
-	"backend/database"
+	"backend/db"
 	"fmt"
 	"log"
 )
 
-func ImportExcelToDb(excelFilename string, sheetName string, d database.DB) (int, error) {
+func ImportExcelToDb(excelFilename string, sheetName string, d db.DB) (int, error) {
 	payments, err := ReadPayments(excelFilename, sheetName)
 	if err != nil {
 		return 0, err

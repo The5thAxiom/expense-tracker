@@ -31,7 +31,7 @@ func (s Server) index(res http.ResponseWriter, req *http.Request) {
 
 func (s Server) categories(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		categories, err := s.Db.GetAllCategories()
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
@@ -47,7 +47,7 @@ func (s Server) categories(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) categoryById(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		categoryId := r.PathValue("categoryId")
 		category, err := s.Db.GetCategoryById(categoryId)
 		if err != nil {
@@ -70,7 +70,7 @@ func (s Server) categoryById(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) subCategories(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		categoryId := r.PathValue("categoryId")
 		subCategories, err := s.Db.GetAllSubCategoriesforCategory(categoryId)
 		if err != nil {
@@ -87,7 +87,7 @@ func (s Server) subCategories(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) subCategoryById(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		categoryId := r.PathValue("categoryId")
 		subCategoryId := r.PathValue("subCategoryId")
 
@@ -110,17 +110,89 @@ func (s Server) subCategoryById(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s Server) currencies(w http.ResponseWriter, r *http.Request) {}
+func (s Server) currencies(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		currencies, err := s.Db.GetAllCurrencies()
+		if err != nil {
+			errorMessage := "An error occurred: " + err.Error()
+			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			return
+		}
 
-func (s Server) currencyByAbbreviation(w http.ResponseWriter, r *http.Request) {}
+		NewEndpointResponse(w, http.StatusOK, currencies, nil)
+	default:
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+	}
+}
 
-func (s Server) purposes(w http.ResponseWriter, r *http.Request) {}
+func (s Server) currencyByAbbreviation(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		currencyAbbreviation := r.PathValue("currencyAbbreviation")
+		currency, err := s.Db.GetCurrencyByAbbreviation(currencyAbbreviation)
+		if err != nil {
+			errorMessage := "An error occurred: " + err.Error()
+			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			return
+		}
 
-func (s Server) purposesById(w http.ResponseWriter, r *http.Request) {}
+		if currency == nil {
+			errorMessage := "No currency found for id '" + currencyAbbreviation + "'"
+			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			return
+		}
+
+		NewEndpointResponse(w, http.StatusOK, *currency, nil)
+	default:
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+	}
+}
+
+func (s Server) purposes(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		purposes, err := s.Db.GetAllPurposes()
+		if err != nil {
+			errorMessage := "An error occurred: " + err.Error()
+			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			return
+		}
+
+		NewEndpointResponse(w, http.StatusOK, purposes, nil)
+	default:
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+	}
+}
+
+func (s Server) purposesById(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		purposeId := r.PathValue("purposeId")
+		purpose, err := s.Db.GetPurposeById(purposeId)
+		if err != nil {
+			errorMessage := "An error occurred: " + err.Error()
+			NewEndpointResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+			return
+		}
+
+		if purpose == nil {
+			errorMessage := "No payment purpose found for id '" + purposeId + "'"
+			NewEndpointResponse(w, http.StatusBadRequest, nil, &errorMessage)
+			return
+		}
+
+		NewEndpointResponse(w, http.StatusOK, *purpose, nil)
+	default:
+		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
+	}
+}
 
 func (s Server) payments(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
+		queryParams := r.URL.Query()
+
 		payments, err := s.Db.GetAllPayments()
 		if err != nil {
 			errorMessage := "An error occurred: " + err.Error()
@@ -128,7 +200,11 @@ func (s Server) payments(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		NewEndpointResponse(w, http.StatusOK, payments, nil)
+		if len(queryParams) == 0 {
+			NewEndpointResponse(w, http.StatusOK, payments, nil)
+		} else {
+			filterPaymentsService(w, payments, queryParams)
+		}
 	default:
 		NewEndpointResponse(w, http.StatusBadRequest, nil, nil)
 	}
@@ -136,7 +212,7 @@ func (s Server) payments(w http.ResponseWriter, r *http.Request) {
 
 func (s Server) paymentById(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case "GET":
+	case http.MethodGet:
 		paymentIdPathVar := r.PathValue("paymentId")
 		paymentIdInt64, err := strconv.ParseInt(paymentIdPathVar, 10, 32)
 		paymentId := int(paymentIdInt64)
