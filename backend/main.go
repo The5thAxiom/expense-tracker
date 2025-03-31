@@ -3,6 +3,7 @@ package main
 import (
 	"backend/batch"
 	"backend/database/sqlite"
+	"backend/server"
 	"fmt"
 	"log"
 	"os"
@@ -28,7 +29,8 @@ func getCliArgument(argument string) string {
 }
 
 func getCliFlag(flag string) bool {
-	return slices.Contains(os.Args[1:], "--"+flag)
+	flagExists := slices.Contains(os.Args[1:], "--"+flag)
+	return flagExists
 }
 
 func main() {
@@ -57,9 +59,8 @@ func main() {
 
 		fmt.Printf("Added %d payments to %s from %s", num, dbName, excelFileName)
 	case "serve":
-		fmt.Println("serving Y3VudA==...")
-		fmt.Println(db.GetAllCategories())
-		fmt.Println(db.GetCategoryById("needs"))
+		server := server.New(8000, db, nil)
+		server.Run()
 	case "help":
 		printHelp()
 	default:
