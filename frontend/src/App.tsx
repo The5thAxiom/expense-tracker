@@ -40,58 +40,62 @@ type Payment = {
 
 
 function App() {
-  const [payments, setPayments] = useState<Payment[]>([]);
+  const [payments, setPayments] = useState<Payment[] | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function fetchPayements() {
     const res = await fetch("/api/payments");
-    const json = await res.json();
+    const json: { errorMessage: string, data: Payment[] } = await res.json();
 
-    if(json.errorMessage) {
+    if (json.errorMessage) {
       setErrorMessage(json.errorMessage);
       return;
     }
-    
-    setPayments(json.data);
+
+    setPayments(json.data.toReversed());
   }
 
-  const list = [1,2,3,4,5];
   useEffect(() => {
     fetchPayements();
   }, []);
-  
+
 
   return (
     <>
-    {errorMessage}
-    <table>
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Subcategory</th>
-        <th>Purpose</th>
-        <th>Notes</th>
-      </tr>
-      </thead>
-      <tbody>
-      {payments.map((payment) => {
-        return <tr key={payment.id}>
-            <td>{payment.id}</td>
-            <td>{new Date(payment.date).toDateString()}</td>
-            <td>{payment.currency.symbol} {payment.amount}</td>
-            <td>{payment.description}</td>
-            <td>{payment.category.name}</td>
-            <td>{payment.subCategory.name}</td>
-            <td>{payment.purpose?.name ?? '-'}</td>
-            <td>{payment.notes ?? '-'}</td>
-          </tr>;
-      })}
-      </tbody>
-      </table>
+      {errorMessage && <div>An error occured: {errorMessage}</div>}
+      {!payments
+        ? <div>Loading...</div>
+        : payments.length === 0
+          ? <div>No payments found :(, click the + button to add a payment</div>
+          : <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Purpose</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {payments.map((payment) => {
+                return <tr key={payment.id}>
+                  <td>{payment.id}</td>
+                  <td>{new Date(payment.date).toDateString()}</td>
+                  <td>{payment.currency.symbol} {payment.amount}</td>
+                  <td>{payment.description}</td>
+                  <td>{payment.category.name}</td>
+                  <td>{payment.subCategory.name}</td>
+                  <td>{payment.purpose?.name ?? '-'}</td>
+                  <td>{payment.notes ?? '-'}</td>
+                </tr>;
+              })}
+            </tbody>
+          </table>
+      }
     </>
   )
 }
