@@ -2,7 +2,7 @@ import './App.css'
 import './pages/About'
 import ReactDOM from "react-dom/client"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import Layout from './pages/layout';
+import Layout from './pages/Layout';
 import About from './pages/About';
 import Help from './pages/Help';
 import Home from './pages/Home';

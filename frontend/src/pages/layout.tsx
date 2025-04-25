@@ -1,6 +1,12 @@
 import {Outlet, Link} from "react-router-dom"
+import LoginButton from "../components/Login"
+import LogoutButton from "../components/Logout"
+import Profile from "../components/Profile"
+import { useAuth0 } from "@auth0/auth0-react"
 
 const Layout = () => {
+    const { isAuthenticated } = useAuth0();
+    
     return (
         <>
             <nav>
@@ -17,8 +23,12 @@ const Layout = () => {
                     <li>
                         <Link to="/payments">Payment</Link>
                     </li>
+                    {!isAuthenticated && 
+                    <li><LoginButton></LoginButton></li>}
+                    {isAuthenticated && <li><LogoutButton></LogoutButton></li>}
                 </ul>
             </nav>
+            <Profile></Profile>
 
             <Outlet></Outlet>
         </>
