@@ -1,0 +1,32 @@
+
+nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    column-gap: 1em;
+}
+
+.nav-left{
+    margin-right: auto;
+}
+
+.nav-right{
+    margin-left: auto;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1em;
+    background-color: rgb(158, 169, 165);
+    padding-inline: 2em;
+    padding-block:1em
+}
+
+
+.header-title{
+    font-size: 2em;
+}

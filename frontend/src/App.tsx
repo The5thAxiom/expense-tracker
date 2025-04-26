@@ -1,12 +1,12 @@
 import './App.css'
-import './pages/About'
+import './pages/About/About'
 import ReactDOM from "react-dom/client"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import Layout from './pages/Layout';
-import About from './pages/About';
-import Help from './pages/Help';
-import Home from './pages/Home';
-import Payments from './pages/Payments';
+import Layout from './pages/Layout/Layout';
+import About from './pages/About/About';
+import Help from './pages/Help/Help';
+import Home from './pages/Home/Home';
+import Payments from './pages/Payments/Payments';
 
 
 function App() {
