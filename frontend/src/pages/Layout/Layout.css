@@ -1,0 +1,18 @@
+:root{
+    --header-height:4em;
+    --footer-height:6em;
+}
+
+body{
+    margin: 0;
+}
+
+main{
+    height: calc(100vh - var(--footer-height) - var(--header-height));
+}
+
+.layout-div{
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+}
