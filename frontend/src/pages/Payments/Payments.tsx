@@ -54,14 +54,13 @@ const Payments = () => {
         setPayments(json.data);
       }
     
-      const list = [1,2,3,4,5];
       useEffect(() => {
         fetchPayements();
       }, []);
       
     
       return (
-        <>
+        <main>
         {errorMessage}
         <table>
           <thead>
@@ -91,7 +90,7 @@ const Payments = () => {
           }).reverse()}
           </tbody>
           </table>
-        </>
+        </main>
       )
 
 }
