@@ -60,7 +60,7 @@ const Payments = () => {
       
     
       return (
-        <>
+        <main>
         {errorMessage}
         <table>
           <thead>
@@ -90,7 +90,7 @@ const Payments = () => {
           }).reverse()}
           </tbody>
           </table>
-        </>
+        </main>
       )
 
 }
