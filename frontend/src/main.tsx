@@ -1,15 +1,17 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import {Auth0Provider} from '@auth0/auth0-react';
 
-console.log(window.location.origin)
+
+const domain = import.meta.env.VITE_DOMAIN
+const clientId = import.meta.env.VITE_CLIENT_ID
+
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
     <Auth0Provider
-      domain='xxxx'
-      clientId='xxxx'
+      domain={domain}
+      clientId={clientId}
       authorizationParams={{redirect_uri: window.location.origin}}
     >
         <App />
