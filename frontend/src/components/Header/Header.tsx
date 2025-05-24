@@ -4,9 +4,19 @@ import LoginButton from "../../components/Login";
 import LogoutButton from "../../components/Logout";
 import Profile from "../Profile/Profile";
 import "./Header.css"
+import { useEffect } from "react";
 
 const Header = () => {
-  const { isAuthenticated, isLoading} = useAuth0();
+  const { isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
+  
+  useEffect(() => {
+    async function getToken() {
+      if (isAuthenticated && !isLoading) {
+        const token = await getAccessTokenSilently();
+      }
+    }
+    getToken();
+  }, [isAuthenticated, isLoading]);
 
   return (
     <header className="header">
