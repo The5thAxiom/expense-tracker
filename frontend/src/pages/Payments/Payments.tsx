@@ -19,12 +19,12 @@ type Category = {
   }
   
   type Currency = {
-    abbreviation: string;
+    id: string;
     name?: string;
     symbol?: string;
   };
   
-  type Payment = {
+  type Expense = {
     id: number;
     date: string;
     paymentIndex: number;
@@ -38,8 +38,8 @@ type Category = {
   };
   
 
-const Payments = () => {
-    const [payments, setPayments] = useState<Payment[]>([]);
+const Expenses = () => {
+    const [payments, setExpenses] = useState<Expense[]>([]);
       const [errorMessage, setErrorMessage] = useState<string | null>(null);
     
       async function fetchPayements() {
@@ -51,7 +51,7 @@ const Payments = () => {
           return;
         }
         
-        setPayments(json.data);
+        setExpenses(json.data);
       }
     
       useEffect(() => {
@@ -95,4 +95,4 @@ const Payments = () => {
 
 }
 
-export default Payments;
+export default Expenses;

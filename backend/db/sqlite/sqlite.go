@@ -68,8 +68,39 @@ func (d SQLiteDB) createDbIfNotExist() {
 
 func (d SQLiteDB) createTablesIfNotExist() error {
 	db := d.dbConn
+
+	// _, err := db.Exec(`
+	// 	CREATE TABLE IF NOT EXISTS User (
+	// 		id TEXT PRIMARY KEY,
+	// 		role TEXT CHECK(role IN ('user', 'admin')) NOT NULL
+	// 	);
+	// `)
+	// if err != nil {
+	// 	return errors.New("User: " + err.Error())
+	// }
+
 	_, err := db.Exec(`
+		CREATE TABLE IF NOT EXISTS Currency (
+			id TEXT PRIMARY KEY,
+			name TEXT NOT NULL,
+			symbol TEXT NOT NULL
+		);
+	`)
+	if err != nil {
+		return errors.New("Currency: " + err.Error())
+	}
+
+	_, err = db.Exec(
+		`INSERT INTO Currency (id, name, symbol) VALUES (?, ?, ?);`,
+		"INR", "Indian Rupee", "₹",
+	)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS Category (
+			userId TEXT NOT NULL,
 			id TEXT PRIMARY KEY,
 			name TEXT NOT NULL,
 			description TEXT
@@ -81,6 +112,7 @@ func (d SQLiteDB) createTablesIfNotExist() error {
 
 	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS SubCategory (
+			userId TEXT NOT NULL,
 			id TEXT PRIMARY KEY,
 			name TEXT NOT NULL,
 			description TEXT,
@@ -94,6 +126,7 @@ func (d SQLiteDB) createTablesIfNotExist() error {
 
 	_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS Purpose (
+			userId TEXT NOT NULL,
 			id TEXT PRIMARY KEY,
 			name TEXT NOT NULL,
 			description TEXT
@@ -104,34 +137,45 @@ func (d SQLiteDB) createTablesIfNotExist() error {
 	}
 
 	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS Currency (
-			abbreviation TEXT PRIMARY KEY,
-			name TEXT,
-			symbol TEXT
-		);
-	`)
-	if err != nil {
-		return errors.New("Currency: " + err.Error())
-	}
-
-	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS Payment (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
+		CREATE TABLE IF NOT EXISTS Expense (
+			id TEXT PRIMARY KEY,
+			userId TEXT NOT NULL,
 			date TEXT NOT NULL,
-			paymentIndex INTEGER NOT NULL,
 			description TEXT NOT NULL,
 			amount INTEGER NOT NULL,
-			currencyAbbreviation INTEGER NOT NULL,
-			subCategoryId INTEGER NOT NULL,
-			purposeId INTEGER,
+			currencyId TEXT NOT NULL,
+			subCategoryId TEXT NOT NULL,
+			purposeId TEXT,
 			notes TEXT,
-			FOREIGN KEY (currencyAbbreviation) REFERENCES Currency(abbreviation),
+			FOREIGN KEY (currencyId) REFERENCES Currency(id),
 			FOREIGN KEY (subCategoryId) REFERENCES SubCategory(id),
 			FOREIGN KEY (purposeId) REFERENCES Purpose(id)
 		);
 	`)
 	if err != nil {
-		return errors.New("FullCategory: " + err.Error())
+		return errors.New("Expense: " + err.Error())
+	}
+
+	_, err = db.Exec(`
+		CREATE TABLE IF NOT EXISTS Tag (
+			userId TEXT NOT NULL,
+			id TEXT PRIMARY KEY,
+			name TEXT NOT NULL,
+			description TEXT
+		);
+	`)
+	if err != nil {
+		return errors.New("Tag: " + err.Error())
+	}
+
+	_, err = db.Exec(`
+		CREATE TABLE IF NOT EXISTS ExpenseTag (
+			tagId TEXT NOT NULL,
+			expenseId TEST NOT NULL
+		);
+	`)
+	if err != nil {
+		return errors.New("ExpenseTag: " + err.Error())
 	}
 
 	return nil

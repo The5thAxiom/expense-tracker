@@ -5,19 +5,14 @@ import "database/sql"
 type DB interface {
 	DbConn() *sql.DB
 
-	// data access methods
-	GetAllCategories() ([]Category, error)
-	GetCategoryById(id string) (*Category, error)
-	GetAllSubCategoriesforCategory(categoryId string) ([]SubCategory, error)
-	GetSubCategoryForCategoryById(id string, categoryId string) (*SubCategory, error)
-	GetAllCurrencies() ([]Currency, error)
-	GetCurrencyByAbbreviation(abbreviation string) (*Currency, error)
-	GetAllPurposes() ([]Purpose, error)
-	GetPurposeById(id string) (*Purpose, error)
-	GetAllPayments() ([]Payment, error)
-	GetPaymentById(id int) (*Payment, error)
+	// GetCategoryById(userId string, id string) (*Category, error)
+	// GetSubCategoryForCategoryById(userId string, id string, categoryId string) (*SubCategory, error)
 
-	// data insertion methods
-
-	// data update methods
+	InsertCategory(categeory CategoryEntity) error
+	InsertTag(tag TagEntity) error
+	LinkTagToExpense(tagId string, expenseId string) error
+	InsertCurrency(currency CurrencyEntity) error
+	InsertPurpose(purpose PurposeEntity) error
+	InsertSubCategory(subCategory SubCategoryEntity) error
+	InsertExpense(userId string, expense ExpenseEntity) error
 }

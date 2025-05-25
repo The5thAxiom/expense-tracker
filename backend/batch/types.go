@@ -5,9 +5,9 @@ import (
 	"time"
 )
 
-type ExcelPaymentRow struct {
+type ExcelExpenseRow struct {
 	Date         time.Time `json:"date"`
-	PaymentIndex int       `json:"payment_index"`
+	ExpenseIndex int       `json:"expense_index"`
 	Description  string    `json:"description"`
 	Amount       float64   `json:"amount"`
 	Currency     string    `json:"currency"`
@@ -17,7 +17,7 @@ type ExcelPaymentRow struct {
 	Notes        *string   `json:"notes,omitempty"`
 }
 
-func (p ExcelPaymentRow) ToString() string {
+func (p ExcelExpenseRow) ToString() string {
 	jsonBytes, _ := json.Marshal(p)
 	return string(jsonBytes)
 }
