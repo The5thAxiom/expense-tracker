@@ -7,7 +7,7 @@ const Home = () => {
             <Form onSubmit={async e => {
 
                 const efinal = {
-                    date: new Date().toISOString(),
+                    date: e.date.toISOString().substring(0, 10),
                     description: e.description,
                     amount: e.amount * 100, // cause we are storing amount in the lowest denomination
                     notes: !e.notes ? null : e.notes,

@@ -1,9 +1,5 @@
 package server
 
-import (
-	"time"
-)
-
 type MaybeNew struct {
 	IsNew       bool    `json:"isNew"`
 	Id          *string `json:"id"`
@@ -12,10 +8,10 @@ type MaybeNew struct {
 }
 
 type NewExpense struct {
-	Date        time.Time `json:"date"`
-	Description string    `json:"description"`
-	Amount      int       `json:"amount"`
-	Notes       *string   `json:"notes"`
+	Date        string  `json:"date"`
+	Description string  `json:"description"`
+	Amount      int     `json:"amount"`
+	Notes       *string `json:"notes"`
 
 	CurrencyId string `json:"currencyId"`
 

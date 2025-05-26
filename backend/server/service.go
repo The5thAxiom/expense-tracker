@@ -9,7 +9,6 @@ import (
 	"slices"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/google/uuid"
 )
@@ -116,7 +115,7 @@ func (s Server) addExpense(userId string, newExpense NewExpense) (string, error)
 	expenseId := uuid.New().String()
 	expense := db.ExpenseEntity{
 		Id:            expenseId,
-		Date:          newExpense.Date.Format(time.RFC3339),
+		Date:          newExpense.Date,
 		Description:   newExpense.Description,
 		Amount:        newExpense.Amount,
 		Notes:         newSqlNullString(newExpense.Notes),

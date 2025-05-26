@@ -8,6 +8,8 @@ type DB interface {
 	// GetCategoryById(userId string, id string) (*Category, error)
 	// GetSubCategoryForCategoryById(userId string, id string, categoryId string) (*SubCategory, error)
 
+	GetAllExpenses(userId string) ([]Expense, error)
+
 	InsertCategory(categeory CategoryEntity) error
 	InsertTag(tag TagEntity) error
 	LinkTagToExpense(tagId string, expenseId string) error

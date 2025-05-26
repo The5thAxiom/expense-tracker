@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 
 	// "fmt"
 
@@ -54,21 +55,29 @@ func (s Server) expensesController(w http.ResponseWriter, r *http.Request) {
 	userId := r.Header.Get("X-USER-ID")
 
 	switch r.Method {
-	// case http.MethodGet:
-	// 	queryParams := r.URL.Query()
+	case http.MethodGet:
+		// 	queryParams := r.URL.Query()
 
-	// 	expenses, err := s.Db.GetAllExpenses()
-	// 	if err != nil {
-	// 		errorMessage := "An error occurred: " + err.Error()
-	// 		NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
-	// 		return
-	// 	}
+		// 	expenses, err := s.Db.GetAllExpenses()
+		// 	if err != nil {
+		// 		errorMessage := "An error occurred: " + err.Error()
+		// 		NewResponse(w, http.StatusInternalServerError, nil, &errorMessage)
+		// 		return
+		// 	}
 
-	// 	if len(queryParams) == 0 {
-	// 		NewResponse(w, http.StatusOK, expenses, nil)
-	// 	} else {
-	// 		filterExpensesService(w, expenses, queryParams)
-	// 	}
+		// 	if len(queryParams) == 0 {
+		// 		NewResponse(w, http.StatusOK, expenses, nil)
+		// 	} else {
+		// 		filterExpensesService(w, expenses, queryParams)
+		// 	}
+
+		expenses, err := s.Db.GetAllExpenses(userId)
+		if err != nil {
+			ErrorResponse(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		JsonResponse(w, http.StatusOK, expenses)
 
 	case http.MethodPost:
 		var newExpense NewExpense
@@ -78,6 +87,8 @@ func (s Server) expensesController(w http.ResponseWriter, r *http.Request) {
 			ErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
+
+		fmt.Printf("%s %T\n", newExpense.Date, newExpense.Date)
 
 		id, err := s.addExpense(userId, newExpense)
 		if err != nil {
