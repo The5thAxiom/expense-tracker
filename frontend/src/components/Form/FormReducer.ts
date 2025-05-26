@@ -31,27 +31,41 @@ export const initialFormState: ExpenseFormData = {
 }
 
 export type ExpenseFormAction = {
-    type: "CHANGE_TEXT_INPUT", payload: React.ChangeEvent<HTMLInputElement>
+    type: "CHANGE_INPUT", payload: React.ChangeEvent<HTMLInputElement>
 } | {
-    type: "CHANGE_DATE_INPUT", payload: React.ChangeEvent<HTMLInputElement>
+    type: "CHANGE_SELECT", payload: React.ChangeEvent<HTMLSelectElement>
 }
 
-export function formReducer(state: ExpenseFormData, action: ExpenseFormAction): ExpenseFormData {
-    const type = action.payload.target.type;
-    const name = action.payload.target.name;
+export function formReducer(state: ExpenseFormData, { type, payload }: ExpenseFormAction): ExpenseFormData {
+    const name = payload.target.name;
 
-    switch (action.type) {
-        case "CHANGE_TEXT_INPUT":
-            console.log(action.payload.target)
-            return {
-                ...state,
-                [name]: type === 'number'
-                    ? action.payload.target.valueAsNumber
-                    : type === 'date'
-                        ? action.payload.target.valueAsDate
-                        : action.payload.target.value
+    switch (type) {
+        case "CHANGE_INPUT":
+            const inputType = payload.target.type;
+            let inputValue;
+
+            if (inputType === "number") {
+                inputValue = payload.target.valueAsNumber
+            } else if (inputType === "date") {
+                inputValue = payload.target.valueAsDate
+            } else {
+                inputValue = payload.target.value
             }
-        case 'CHANGE_DATE_INPUT':
+
+            switch (inputType) {
+                case "number":
+                    inputValue = payload.target.valueAsNumber
+                    break;
+                case "date":
+                    inputValue = payload.target.valueAsDate
+                    break;
+                default:
+                    inputValue = payload.target.value
+            }
+
+            return { ...state, [name]: inputValue }
+        case 'CHANGE_SELECT':
+            return { ...state, [name]: payload.target.value }
         default:
             return state
     }

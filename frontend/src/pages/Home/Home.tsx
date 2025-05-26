@@ -1,4 +1,4 @@
-import Form from "../../components/Form/form";
+import Form from "../../components/Form/Form";
 
 const Home = () => {
     return (
@@ -9,7 +9,7 @@ const Home = () => {
                 const efinal = {
                     date: new Date().toISOString(),
                     description: e.description,
-                    amount: e.amount,
+                    amount: e.amount * 100, // cause we are storing amount in the lowest denomination
                     notes: e.notes,
                     currencyId: "INR",
                     category: {
