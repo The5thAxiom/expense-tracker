@@ -4,47 +4,17 @@ import (
 	"backend/batch"
 	"backend/db/sqlite"
 	"backend/server"
+	"backend/vars"
 	"fmt"
 	"log"
 	"os"
-	"slices"
-	"strings"
-
-	"github.com/joho/godotenv"
 )
 
-func getCliArgument(argument string) string {
-	args := os.Args[1:]
-
-	argumentNameIndex := slices.Index(args, "--"+argument)
-	if argumentNameIndex == -1 {
-		log.Fatalf("CLI argument not found, please provide '--%s <%s>'", argument, argument)
-	}
-
-	argumentIndex := argumentNameIndex + 1
-
-	if len(args) < argumentIndex+1 || strings.HasPrefix(args[argumentIndex], "--") {
-		log.Fatalf("No argument provided for flag '--%s'", argument)
-	}
-
-	return args[argumentIndex]
-}
-
-func getCliFlag(flag string) bool {
-	flagExists := slices.Contains(os.Args[1:], "--"+flag)
-	return flagExists
-}
-
 func main() {
-	command := os.Args[1]
+	vars.Init()
 
-	dbName := getCliArgument("db")
-	resetDb := getCliFlag("reset-db")
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+	dbName := vars.Get[string]("db")
+	resetDb := vars.Get[bool]("reset-db")
 
 	db, err := sqlite.SQLite(dbName, resetDb)
 	if err != nil {
@@ -52,12 +22,13 @@ func main() {
 	}
 	defer db.DbConn().Close()
 
+	command := os.Args[1]
 	switch command {
 	case "init":
 		fmt.Println("Initialized db")
 	case "import-excel":
-		excelFileName := getCliArgument("excel")
-		sheetName := getCliArgument("sheet")
+		excelFileName := vars.Get[string]("excel")
+		sheetName := vars.Get[string]("sheet")
 
 		num, err := batch.ImportExcelToDb(excelFileName, sheetName, db)
 		if err != nil {

@@ -2,10 +2,10 @@ package server
 
 import (
 	"backend/db"
+	"backend/vars"
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/MicahParks/keyfunc"
@@ -33,7 +33,7 @@ type ServerOptions struct {
 }
 
 func New(host string, port int, db db.DB, options *ServerOptions) Server {
-	jwksUrl := os.Getenv("AUTH0_PUBKEY_URL")
+	jwksUrl := vars.Get[string]("AUTH0_PUBKEY_URL")
 	jwks, err := keyfunc.Get(jwksUrl, keyfunc.Options{
 		RefreshInterval: time.Hour,
 		RefreshErrorHandler: func(err error) {
@@ -55,7 +55,7 @@ func New(host string, port int, db db.DB, options *ServerOptions) Server {
 		middleware: make([]MiddleWare, 0),
 
 		jwks:     jwks,
-		audience: os.Getenv("AUTH0_AUDIENCE"),
+		audience: vars.Get[string]("AUTH0_AUDIENCE"),
 	}
 
 	// fs := http.FileServer(http.Dir(""))
@@ -70,7 +70,7 @@ func (s Server) Address() string {
 }
 
 func (s Server) Run() {
-	fmt.Printf("serving Y3VudA== on host %s port %d...\n", s.Host, s.Port)
+	log.Printf("serving Y3VudA== on host %s port %d...\n", s.Host, s.Port)
 
 	err := http.ListenAndServe(s.Address(), s.mux)
 	if err != nil {
