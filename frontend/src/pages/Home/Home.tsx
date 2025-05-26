@@ -10,7 +10,7 @@ const Home = () => {
                     date: new Date().toISOString(),
                     description: e.description,
                     amount: e.amount * 100, // cause we are storing amount in the lowest denomination
-                    notes: e.notes,
+                    notes: !e.notes ? null : e.notes,
                     currencyId: "INR",
                     category: {
                         isNew: true,

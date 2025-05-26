@@ -19,7 +19,7 @@ export const initialFormState: ExpenseFormData = {
     date: new Date(),
     description: "",
     amount: 0,
-    currencyId: 'INR',
+    currencyId: "",
     newCurrencyId: "",
     categoryId: "",
     newCategoryName: "",

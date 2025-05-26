@@ -89,7 +89,7 @@ function Form({ onSubmit }: FormProps) {
     //     fetchPurposes();
     // }, [])
 
-    const [state, dispatch] = useReducer(formReducer, initialFormState);
+    const [formData, formDataDispatch] = useReducer(formReducer, initialFormState);
 
     // useEffect(() => {
     //     if (payment.categoryId && payment.categoryId.length > 0) {
@@ -97,44 +97,47 @@ function Form({ onSubmit }: FormProps) {
     //     }
     // }, [payment.categoryId])
 
+    useEffect(() => {
+        console.log(formData)
+    }, [formData])
+
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-        dispatch({type: "CHANGE_INPUT", payload: e})
+        formDataDispatch({type: "CHANGE_INPUT", payload: e})
     }
 
     function handleSelectChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        dispatch({type: "CHANGE_SELECT", payload: e})
+        formDataDispatch({type: "CHANGE_SELECT", payload: e})
     }
 
     return <>
         <form onSubmit={e => {
             e.preventDefault();
-            onSubmit(state);
+            onSubmit(formData);
         }}>
             <div>{errorMessage}</div>
             <div>
                 <label htmlFor='date'>Expense Date:</label>
-                <input name='date' id='date-input' type='date' onChange={handleInputChange} value={state.date.toISOString().substring(0, 10)} />
+                <input name='date' id='date-input' type='date' onChange={handleInputChange} value={formData.date.toISOString().substring(0, 10)} />
             </div>
             <div>
                 <label htmlFor='amount'>Expense Amount:</label>
-                <input name='amount' type='number' onChange={handleInputChange} value={state.amount} />
+                <input name='amount' type='number' onChange={handleInputChange} value={formData.amount} />
             </div>
             <div>
                 <label htmlFor='currency'>Select a Currency:</label>
                 {currencies && <>
-                    <select name='currency' defaultValue='' onChange={handleSelectChange}>
+                    <select name='currencyId' defaultValue='' onChange={handleSelectChange}>
                         <option value=''>New Currency</option>
                         {currencies.map(c => <option key={c.id} value={c.id}>
                             {c.name} ({c.id} | {c.symbol})
                         </option>)}
                     </select>
-                    {state.currencyId !== '' && <input name='currencyId' type='text' onChange={handleInputChange} />}
                 </>
                 }
             </div>
             <div>
                 <label htmlFor='description'>Description:</label>
-                <input name='description' type='text' onChange={handleInputChange} value={state.description} />
+                <input name='description' type='text' onChange={handleInputChange} value={formData.description} />
             </div>
             <div>
                 <label htmlFor='category'>Select a Category:</label>
@@ -144,9 +147,9 @@ function Form({ onSubmit }: FormProps) {
                         {c.name}{c.description && <> ({c.description})</>}
                     </option>)}
                 </select>} */}
-                <input name='newCategoryName' type='text' onChange={handleInputChange} value={state.newCategoryName} />
+                <input name='newCategoryName' type='text' onChange={handleInputChange} value={formData.newCategoryName} />
             </div>
-            {(state.categoryId || state.newCategoryName) && <div>
+            {(formData.categoryId || formData.newCategoryName) && <div>
                 <label htmlFor='subCategory'>Select a sub category:</label>
                 {/* {subCategories && <select name='sub category' defaultValue='' onChange={handleSelectChange}>
                     <option value=''>New Sub Category</option>
@@ -154,7 +157,7 @@ function Form({ onSubmit }: FormProps) {
                         {sc.name}{sc.description && <> ({sc.description})</>}
                     </option>)}
                 </select>} */}
-                <input name='newSubCategoryName' type='text' onChange={handleInputChange} value={state.newSubCategoryName} />
+                <input name='newSubCategoryName' type='text' onChange={handleInputChange} value={formData.newSubCategoryName} />
             </div>}
             <div>
                 <label htmlFor='purpose'>Select a Purpose:</label>
@@ -167,7 +170,7 @@ function Form({ onSubmit }: FormProps) {
             </div>
             <div>
                 <label htmlFor='notes'>Notes:</label>
-                <input name='notes' type='text' onChange={handleInputChange} value={state.notes} />
+                <input name='notes' type='text' onChange={handleInputChange} value={formData.notes} />
             </div>
             <button type='submit'>Submit</button>
         </form>
