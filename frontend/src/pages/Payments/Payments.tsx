@@ -130,7 +130,12 @@ const Expenses = () => {
             return <tr key={payment.id}>
               {/* <td>{payment.id}</td> */}
               <td>{new Date(payment.date).toDateString()}</td>
-              <td>{payment.currency.symbol} {payment.amount}</td>
+              <td>
+                {new Intl.NumberFormat('en-IN', {
+                  style: 'currency',
+                  currency: payment.currency.id
+                }).format(payment.amount / 100)}
+              </td>
               <td>{payment.description}</td>
               <td>{payment.category.name}</td>
               <td>{payment.subCategory.name}</td>
