@@ -2,16 +2,29 @@ package server
 
 import (
 	"backend/db"
+	"backend/vars"
 	"fmt"
 	"log"
 	"net/http"
+	"time"
+
+	"github.com/MicahParks/keyfunc"
 )
 
+type Handler func(w http.ResponseWriter, r *http.Request)
+type MiddleWare func(handler Handler) Handler
+
 type Server struct {
-	Db   db.DB
-	Mux  *http.ServeMux
+	Db db.DB
+
 	Host string
 	Port int
+
+	mux        *http.ServeMux
+	middleware []MiddleWare
+
+	jwks     *keyfunc.JWKS
+	audience string
 }
 
 type ServerOptions struct {
@@ -20,11 +33,29 @@ type ServerOptions struct {
 }
 
 func New(host string, port int, db db.DB, options *ServerOptions) Server {
+	jwksUrl := vars.Get[string]("AUTH0_PUBKEY_URL")
+	jwks, err := keyfunc.Get(jwksUrl, keyfunc.Options{
+		RefreshInterval: time.Hour,
+		RefreshErrorHandler: func(err error) {
+			fmt.Printf("JWKS refresh, error: %s\n", err)
+		},
+		RefreshUnknownKID: true,
+	})
+	if err != nil {
+		log.Fatalf("Error occurred loading public key: %v", err)
+	}
+
 	server := Server{
-		Db:   db,
-		Mux:  http.NewServeMux(),
+		Db: db,
+
 		Host: host,
 		Port: port,
+
+		mux:        http.NewServeMux(),
+		middleware: make([]MiddleWare, 0),
+
+		jwks:     jwks,
+		audience: vars.Get[string]("AUTH0_AUDIENCE"),
 	}
 
 	// fs := http.FileServer(http.Dir(""))
@@ -39,10 +70,33 @@ func (s Server) Address() string {
 }
 
 func (s Server) Run() {
-	fmt.Printf("serving Y3VudA== on host %s port %d...\n", s.Host, s.Port)
+	log.Printf("serving Y3VudA== on host %s port %d...\n", s.Host, s.Port)
 
-	err := http.ListenAndServe(s.Address(), s.Mux)
+	err := http.ListenAndServe(s.Address(), s.mux)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func (s Server) addRouteWithMiddleware(route string, middleware []MiddleWare, handler Handler) {
+	finalHandler := handler
+	for _, m := range middleware {
+		finalHandler = m(finalHandler)
+	}
+	for _, m := range s.middleware {
+		finalHandler = m(finalHandler)
+	}
+	s.mux.HandleFunc(route, finalHandler)
+}
+
+func (s Server) addRoute(route string, handler Handler) {
+	finalHandler := handler
+	for _, m := range s.middleware {
+		finalHandler = m(finalHandler)
+	}
+	s.mux.HandleFunc(route, finalHandler)
+}
+
+func (s *Server) useMiddleware(m MiddleWare) {
+	s.middleware = append(s.middleware, m)
 }

@@ -8,50 +8,50 @@ import (
 	"strings"
 )
 
-func WritePayment(d db.DB, payment ExcelPaymentRow, index int) error {
+func WriteExpense(d db.DB, expense ExcelExpenseRow, index int) error {
 	db := d.DbConn()
-	log.Printf("Writing payment #%d (%s #%d)\n", index, payment.Date.String(), payment.PaymentIndex)
+	log.Printf("Writing expense #%d (%s #%d)\n", index, expense.Date.String(), expense.ExpenseIndex)
 
-	categoryId, err := getExistingOrNewCategoryId(db, payment.Category)
+	categoryId, err := getExistingOrNewCategoryId(db, expense.Category)
 	if err != nil {
 		return err
 	}
 
-	subCategoryId, err := getExistingOrNewSubCategoryId(db, payment.SubCategory, categoryId)
+	subCategoryId, err := getExistingOrNewSubCategoryId(db, expense.SubCategory, categoryId)
 	if err != nil {
 		return err
 	}
 
-	purposeId, err := getExistingOrNewPurposeId(db, payment.Purpose)
+	purposeId, err := getExistingOrNewPurposeId(db, expense.Purpose)
 	if err != nil {
 		return err
 	}
 
-	err = insertCurrencyIfDoesNotExist(db, payment.Currency)
+	err = insertCurrencyIfDoesNotExist(db, expense.Currency)
 	if err != nil {
 		return err
 	}
 
 	_, err = db.Exec(`
-		INSERT INTO Payment (
+		INSERT INTO Expense (
 			date,
-			paymentIndex,
+			expenseIndex,
 			description,
 			amount,
-			currencyAbbreviation,
+			currencyId,
 			subCategoryId,
 			purposeId,
 			notes
 		) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 	`,
-		payment.Date,
-		payment.PaymentIndex,
-		payment.Description,
-		payment.Amount,
-		payment.Currency,
+		expense.Date,
+		expense.ExpenseIndex,
+		expense.Description,
+		expense.Amount,
+		expense.Currency,
 		subCategoryId,
 		purposeId,
-		payment.Notes,
+		expense.Notes,
 	)
 	if err != nil {
 		return err
@@ -120,10 +120,10 @@ func getExistingOrNewPurposeId(db *sql.DB, purpose *string) (*string, error) {
 }
 
 func insertCurrencyIfDoesNotExist(db *sql.DB, currencyAbbr string) error {
-	err := db.QueryRow(`SELECT abbreviation FROM Currency WHERE abbreviation=?;`, currencyAbbr).Scan(&currencyAbbr)
+	err := db.QueryRow(`SELECT id FROM Currency WHERE id=?;`, currencyAbbr).Scan(&currencyAbbr)
 	if err == sql.ErrNoRows {
 		log.Printf("Inserting new Currency {id: %s, name: %s}", currencyAbbr, currencyAbbr)
-		_, err = db.Exec(`INSERT INTO Currency (abbreviation, name) VALUES (?, ?);`, currencyAbbr, currencyAbbr)
+		_, err = db.Exec(`INSERT INTO Currency (id, name) VALUES (?, ?);`, currencyAbbr, currencyAbbr)
 		if err != nil {
 			return errors.New("Error inserting into Currency table: " + err.Error())
 		}

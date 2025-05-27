@@ -9,7 +9,7 @@ import (
 	excelize "github.com/xuri/excelize/v2"
 )
 
-func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) {
+func ReadExpenses(filename string, sheetname string) ([]ExcelExpenseRow, error) {
 	rows, err := readRows(filename, sheetname)
 	if err != nil {
 		return nil, err
@@ -17,10 +17,10 @@ func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) 
 
 	rows = rows[1:] // ignore the header
 
-	payments := make([]ExcelPaymentRow, len(rows))
+	expenses := make([]ExcelExpenseRow, len(rows))
 
 	var runningDate *time.Time = nil
-	paymentIndexForRunningDate := 0
+	expenseIndexForRunningDate := 0
 
 	for index, row := range rows {
 		if len(row) < 7 {
@@ -35,10 +35,10 @@ func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) 
 		}
 
 		if runningDate != nil && *runningDate == timeObject {
-			paymentIndexForRunningDate += 1
+			expenseIndexForRunningDate += 1
 		} else {
 			runningDate = &timeObject
-			paymentIndexForRunningDate = 0
+			expenseIndexForRunningDate = 0
 		}
 
 		amountString := row[4]
@@ -57,9 +57,9 @@ func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) 
 			notes = &row[8]
 		}
 
-		payments[index] = ExcelPaymentRow{
+		expenses[index] = ExcelExpenseRow{
 			Date:         timeObject,
-			PaymentIndex: paymentIndexForRunningDate,
+			ExpenseIndex: expenseIndexForRunningDate,
 			Description:  row[3],
 			Amount:       amount,
 			Category:     row[5],
@@ -70,7 +70,7 @@ func ReadPayments(filename string, sheetname string) ([]ExcelPaymentRow, error) 
 		}
 	}
 
-	return payments, nil
+	return expenses, nil
 }
 
 func readRows(filename string, sheetname string) ([][]string, error) {

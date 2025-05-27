@@ -26,3 +26,11 @@ func NewResponse(w http.ResponseWriter, statusCode int, data any, errorMessage *
 	// can the below be done in a middleware method??
 	log.Printf("%d %s: %s", statusCode, http.StatusText(statusCode), string(jsonBytes))
 }
+
+func JsonResponse(w http.ResponseWriter, statusCode int, data any) {
+	NewResponse(w, statusCode, data, nil)
+}
+
+func ErrorResponse(w http.ResponseWriter, statusCode int, errorMessage string) {
+	NewResponse(w, statusCode, nil, &errorMessage)
+}
